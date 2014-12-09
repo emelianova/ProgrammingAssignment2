@@ -1,15 +1,34 @@
 ## Put comments here that give an overall description of what your
 ## functions do
 
-## Write a short comment describing this function
+## This function reads and stores original and inverted matrices
 
 makeCacheMatrix <- function(x = matrix()) {
-
+        m.inv <- NULL
+        set <- function(y) {  # Needed if you want to reset matrix
+                x <<- y       # Changes the variable outside this function, so <<-
+                m.inv <<- NULL
+        }
+        get <- function() {x}
+        set.inv <- function(mi) {m.inv <<- mi}  # 1st call of cacheSolve
+        get.inv <- function() {m.inv}           # 2nd call of cacheSolve
+        list(set=set, get=get, 
+             set.inv=set.inv, get.inv=get.inv)
 }
 
 
-## Write a short comment describing this function
+## If inverted matrix already exists and nothing has changed, function returns the
+## inverted matrix from cache. Otherwise it computes inverse of original matrix, 
+## writes it down to cash and prints out. 
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+        m.inv <- x$get.inv()
+        if (!is.null(m.inv)) {
+                message("getting cached data")
+                return(m.inv)
+        }
+        data <- x$get()
+        m.inv <- solve(data)
+        x$set.inv(m.inv)
+        m.inv
 }
