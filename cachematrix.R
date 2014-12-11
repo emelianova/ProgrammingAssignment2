@@ -19,7 +19,7 @@ makeCacheMatrix <- function(x = matrix()) {
 
 ## If inverted matrix already exists and nothing has changed, function returns the
 ## inverted matrix from cache. Otherwise it computes inverse of original matrix, 
-## writes it down to cash and prints out. 
+## writes it down to the cache and prints. 
 
 cacheSolve <- function(x, ...) {
         m.inv <- x$get.inv()
